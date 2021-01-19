@@ -1,33 +1,59 @@
-public void setup() 
-{
-	String[] lines = loadStrings("words.txt");
-	System.out.println("there are " + lines.length + " lines");
-	for (int i = 0 ; i < lines.length; i++) 
-	{
-	  System.out.println(pigLatin(lines[i]));
-	}
-}
-public void draw()
-{
-        //not used
-}
-public int findFirstVowel(String sWord)
-//precondition: sWord is a valid String of length greater than 0.
-//postcondition: returns the position of the first vowel in sWord.  If there are no vowels, returns -1
-{
-	return -1;
-}
+public String pigLatinate (String words){
+  char[] vowels = {'a','e','i','o','u'};
+  String output = "";
+  String word = "";
+  int index = 0;
+  int index2 = 0;
 
-public String pigLatin(String sWord)
-//precondition: sWord is a valid String of length greater than 0
-//postcondition: returns the pig latin equivalent of sWord
-{
-	if(findFirstVowel(sWord) == -1)
-	{
-		return sWord + "ay";
-	}
-	else
-	{
-		return "ERROR!";
-	}
+  while (index < words.length()){
+  //starts over here once the thing finds a pig latin word
+  out:
+  {
+    //finds the words
+    for(index2 = index; (index2 < words.length() && words.charAt(index2) != ' ' ); index2++)
+    {
+      word = words.substring(index,index2 + 1);
+    }
+    index = index2 + 1;	
+    
+    //puts the word in pig latin if it begins with qu
+    if((word.charAt(0) == 'Q' || word.charAt(0) == 'q') && (word.charAt(1) == 'u' || word.charAt(1) == 'u')){
+      output += word.substring(2, word.length()) + "quay";
+      output += " ";
+      break out;
+    }
+    
+    //puts the word in pig latin if it begins with a vowel 
+    for(int i = 0; i < vowels.length; i++)
+    {  
+      if(word.charAt(0) == vowels[i])
+      {
+        output += word + "way";
+        output += " ";
+        break out;
+      }
+    }
+    
+    //puts the word in pig latin if it has a voewl inside
+    for(int i = 0; i < word.length(); i++)
+    {
+      for(int a = 0; a < vowels.length; a++)
+      {
+        if(word.charAt(i) == vowels[a])
+        {
+          output += word.substring(i, word.length()) + word.substring(0,i) + "ay";
+          output += " ";
+          break out;
+        }
+      }
+    }
+    //no vowels
+    output += word + "ay";
+    output += " ";
+  }
+  }
+  return output; 
+}
+void setup(){
+  println(pigLatinate("beast dough happy question star three eagle try"));
 }
