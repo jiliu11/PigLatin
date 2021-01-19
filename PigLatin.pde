@@ -55,5 +55,5 @@ public String pigLatinate (String words){
   return output; 
 }
 void setup(){
-  println(pigLatinate("beast dough happy question star three eagle try"));
+  System.out.println(pigLatinate("beast dough happy question star three eagle try"));
 }
